@@ -7,26 +7,34 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
 import page.Globals;
+import test.ShareCarrot;
+import test.ShowBasketHistory;
 
 public class App {
     private static Result result;
 
     public static void main(String[] args) {
         System.setProperty(Globals.chromeDriverName, Globals.chromeDriverPath);
-        runTests();
-        reportTestResult();
+        long excTime = runTests();
+        reportTestResult(excTime);
     }
 
-    private static void runTests() {
+    private static long runTests() {
+        long startTime = System.currentTimeMillis();
+
         // Run the test
         JUnitCore junit = new JUnitCore();
         result = junit.run(
-        // Login.class,
-        // AddItem.class
-        );
+                // Login.class,
+                // AddItem.class
+                ShowBasketHistory.class);
+        // ShareCarrot.class);
+
+        long endTime = System.currentTimeMillis();
+        return (endTime - startTime);
     }
 
-    private static void reportTestResult() {
+    private static void reportTestResult(long excTime) {
         // Report the tests to result/result_{date}.txt
         try {
             FileWriter myWriter = new FileWriter("result\\result_" + LocalDate.now() + ".txt");
@@ -34,7 +42,7 @@ public class App {
             // Write Result
             // If successful
             if (result.wasSuccessful()) {
-                myWriter.write("All tests in are PASSED");
+                myWriter.write("All tests in are PASSED in " + excTime + "ms");
                 // If failed report the failures
             } else {
                 myWriter.write("There are " + result.getFailureCount() + " FAILED test(s): \n");
