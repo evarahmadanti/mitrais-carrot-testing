@@ -36,27 +36,107 @@ public class ShareCarrot {
     // loginPage.login("standard_user", "secret_sauce");
     // }
 
+    // There are positive test and negative test suites in this code:
+    // 1. Successfully share transaction: shareTrx()
+    // 2. Failed to share: insufficientAmount(), zeroAmount(), blankField()
+
     @Test
     public void shareTrx() {
-        // Open The History Trx Menu
+        // Open the history Trx menu
         staffDashboardPage.openHistoryTrx();
 
-        // Assert if user can see the share carrot modal
+        // Open the share carrot modal
         historyTrxPage.openShareTrx();
 
         // Assert if user can see they current carrot amount
         historyTrxPage.assertCurrentCarrotsAmount("42");
 
         // Fullfil the field
-        historyTrxPage.sendCarrot("coco", "lorem ipsum", "1");
+        historyTrxPage.sendCarrotFields("coco", "lorem ipsum", "1");
 
-        // wait until the trx success
+        // Click Send
+        historyTrxPage.sendCarrotButton();
 
         // Check the alert message
         historyTrxPage.assertAlertText("The Transaction Success!");
 
+        // Accept the alert
+        historyTrxPage.acceptAlert();
+
+        // Reload the page
+        driver.navigate().refresh();
+
         // Check the basket history
         historyTrxPage.assertSpentCarrotBasket("0", "0", "-9");
+    }
+
+    @Test
+    public void insufficientAmount() {
+        // Open the history trx menu
+        staffDashboardPage.openHistoryTrx();
+
+        // Open the share carrot modal
+        historyTrxPage.openShareTrx();
+
+        // Fullfil the field
+        historyTrxPage.sendCarrotFields("coco", "lorem ipsum", "500");
+
+        // Assert the insufficient warning
+        historyTrxPage.assertAmountWarning("The carrot amount is insufficient");
+
+        // Click Send
+        historyTrxPage.sendCarrotButton();
+
+        // Assert the failed trx warning
+        historyTrxPage.assertAlertText("Something is wrong! Please Try Again.");
+    }
+
+    @Test
+    public void zeroAmount() {
+        // Open the history trx menu
+        staffDashboardPage.openHistoryTrx();
+
+        // Open the share carrot modal
+        historyTrxPage.openShareTrx();
+
+        // Fullfil the field
+        historyTrxPage.sendCarrotFields("coco", "lorem ipsum", "0");
+
+        // Assert the insufficient warning
+        historyTrxPage.assertAmountWarning("The minimum amount is 1");
+    }
+
+    @Test
+    public void blankField() {
+        // Open the history trx menu
+        staffDashboardPage.openHistoryTrx();
+
+        // Open the share carrot modal
+        historyTrxPage.openShareTrx();
+
+        // all blank fields
+        historyTrxPage.sendCarrotFields("", "", "");
+        historyTrxPage.sendCarrotButton();
+
+        // Assert the user blank warning
+        historyTrxPage.assertAlertText("Please select a user");
+        historyTrxPage.acceptAlert();
+
+        // message and amount blank fields
+        historyTrxPage.sendCarrotFields("coco", "", "");
+        historyTrxPage.sendCarrotButton();
+
+        // Assert the message warning
+        historyTrxPage.assertAlertText("Please enter a message");
+        historyTrxPage.acceptAlert();
+
+        // amount blank fields
+        historyTrxPage.sendCarrotFields("coco", "test", "");
+        historyTrxPage.sendCarrotButton();
+
+        // Assert the message warning
+        historyTrxPage.assertAlertText("Something is wrong! Please Try Again.");
+        historyTrxPage.acceptAlert();
     }
 
     // After each test

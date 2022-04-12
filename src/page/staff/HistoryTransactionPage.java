@@ -1,10 +1,14 @@
 package page.staff;
 
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.junit.Assert;
 
 public class HistoryTransactionPage {
     WebDriver driver;
@@ -20,6 +24,7 @@ public class HistoryTransactionPage {
     String amountShareTrx_xpath = "//*[@id='amount']";
     String sendButtonTrx_xpath = "/html/body/div[3]/div/div/div[3]/button[2]";
     String currentAmount_xpath = "//*[@id='carrot-left']";
+    String amountWarning_xpath = "//*[@id='send-carrot-form']/div[3]/div";
 
     // Define Locators
     By sharedSpent_loc = By.xpath(sharedSpent_xpath + "[1]");
@@ -31,6 +36,7 @@ public class HistoryTransactionPage {
     By amountShareTrx_loc = By.xpath(amountShareTrx_xpath);
     By sendButtonTrx_loc = By.xpath(sendButtonTrx_xpath);
     By currentAmountTrx_loc = By.xpath(currentAmount_xpath);
+    By amountWarning_loc = By.xpath(amountWarning_xpath);
 
     public HistoryTransactionPage(WebDriver driver) {
         this.driver = driver;
@@ -59,18 +65,29 @@ public class HistoryTransactionPage {
     }
 
     public void openShareTrx() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(sharedSpent_loc));
+
         driver.findElement(shareTrx_loc).click();
     }
 
-    public void accept() {
+    public void acceptAlert() {
         driver.switchTo().alert().accept();
     }
 
     public void assertAlertText(String expectedAlert) {
+        // wait until the alert is present
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.alertIsPresent());
+
         Assert.assertEquals(driver.switchTo().alert().getText(), expectedAlert);
     }
 
-    public void sendCarrot(String name, String message, String amount) {
+    public void sendCarrotFields(String name, String message, String amount) {
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(nameShareTrx_loc));
+
         // Get Username and password input field
         WebElement name_elm = this.driver.findElement(this.nameShareTrx_loc);
         WebElement message_elm = this.driver.findElement(this.messageShareTrx_loc);
@@ -80,7 +97,9 @@ public class HistoryTransactionPage {
         name_elm.sendKeys(name);
         message_elm.sendKeys(message);
         amount_elm.sendKeys(amount);
+    }
 
+    public void sendCarrotButton() {
         // Find the send button
         WebElement sendButton = this.driver.findElement(this.sendButtonTrx_loc);
 
@@ -90,5 +109,9 @@ public class HistoryTransactionPage {
 
     public void assertCurrentCarrotsAmount(String currentAmount) {
         Assert.assertEquals(this.driver.findElement(currentAmountTrx_loc).getText(), currentAmount);
+    }
+
+    public void assertAmountWarning(String warningMessage) {
+        Assert.assertEquals(this.driver.findElement(amountWarning_loc), warningMessage);
     }
 }
