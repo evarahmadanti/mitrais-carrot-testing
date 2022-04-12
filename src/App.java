@@ -27,8 +27,8 @@ public class App {
         result = junit.run(
                 // Login.class,
                 // AddItem.class
-                ShowBasketHistory.class);
-        // ShareCarrot.class);
+                // ShowBasketHistory.class);
+                ShareCarrot.class);
 
         long endTime = System.currentTimeMillis();
         return (endTime - startTime);

@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import page.staff.HistoryTransactionPage;
 import page.staff.Staff;
@@ -40,11 +41,22 @@ public class ShareCarrot {
         // Open The History Trx Menu
         staffDashboardPage.openHistoryTrx();
 
-        // Assert if user can see Home page
+        // Assert if user can see the share carrot modal
         historyTrxPage.openShareTrx();
 
+        // Assert if user can see they current carrot amount
+        historyTrxPage.assertCurrentCarrotsAmount("42");
+
         // Fullfil the field
-        historyTrxPage.sendCarrot("eva", "lorem ipsum dolor sit amet");
+        historyTrxPage.sendCarrot("coco", "lorem ipsum", "1");
+
+        // wait until the trx success
+
+        // Check the alert message
+        historyTrxPage.assertAlertText("The Transaction Success!");
+
+        // Check the basket history
+        historyTrxPage.assertSpentCarrotBasket("0", "0", "-9");
     }
 
     // After each test

@@ -42,7 +42,12 @@ public class ShowBasketHistory {
 
         // Assert if user can see Home page
         historyTrxPage.assertInHistoryTrxPage();
-        historyTrxPage.assertSpentCarrotBasket();
+
+        // Assert the basket history value
+        historyTrxPage.assertSpentCarrotBasket("0", "0", "-3");
+
+        // Assert the current carrot amount
+        historyTrxPage.assertCurrentCarrotsAmount("-9");
     }
 
     // After each test

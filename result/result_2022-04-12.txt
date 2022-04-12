@@ -1,0 +1,10 @@
+There are 1 FAILED test(s): 
+	1. shareTrx(test.ShareCarrot): element click intercepted: Element <a class="badge badge-white" data-toggle="modal" data-target="#exampleModal">...</a> is not clickable at point (530, 243). Other element would receive the click: <textarea id="message" rows="5" class="form-control" required=""></textarea>
+  (Session info: chrome=100.0.4896.75)
+Build info: version: '4.1.3', revision: '7b1ebf28ef'
+System info: host: 'MTNB1076', ip: '192.168.98.237', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [bb846fe76e714477b967fde45cd00b62, clickElement {id=1f824c17-ea87-4cfb-88ff-8e5d04495bdc}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 100.0.4896.75, chrome: {chromedriverVersion: 100.0.4896.60 (6a5d10861ce8..., userDataDir: C:\Users\Eva_R616\AppData\L...}, goog:chromeOptions: {debuggerAddress: localhost:58125}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), se:cdp: ws://localhost:58125/devtoo..., se:cdpVersion: 100.0.4896.75, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Element: [[ChromeDriver: chrome on WINDOWS (bb846fe76e714477b967fde45cd00b62)] -> xpath: //*[@id='root']/div/div/div/div/div/section/div/div[2]/div/div[2]/a]
+Session ID: bb846fe76e714477b967fde45cd00b62

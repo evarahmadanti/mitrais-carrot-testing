@@ -3,6 +3,7 @@ package page.staff;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.junit.Assert;
 
 public class HistoryTransactionPage {
@@ -10,12 +11,15 @@ public class HistoryTransactionPage {
 
     // Define XPath
     String basketCard_xpath = "(//div[@class='row box-reward px-0 mr-0'])";
-    String sharedSpent_xpath = "(//h2[@class='text-white'][normalize-space()='-3 Carrots'])";
-    String bazaarSpent_xpath = "(//h2[@class='text-white'][normalize-space()='0 Carrot'])";
-    String donationSpent_xpath = "(//h2[@class='text-white'][normalize-space()='0 Carrot'])";
-    String shareTrx_xpath = "//a[@class='badge badge-white']";
-    String nameShareTrx_xpath = "(//div[contains(@class,'css-319lph-ValueContainer')])[1]";
-    String messageShareTrx_xpath = "//textarea[@id='message']";
+    String sharedSpent_xpath = "//*[@id='root']/div/div/div/div/div/section/div/div[3]/div/div[2]/h2";
+    String bazaarSpent_xpath = "//*[@id='root']/div/div/div/div/div/section/div/div[1]/div/div[2]/h2";
+    String donationSpent_xpath = "//*[@id='root']/div/div/div/div/div/section/div/div[2]/div/div[2]/h2";
+    String shareTrx_xpath = "//*[@id='root']/div/div/div/div/div/section/div/div[2]/div/div[2]/a";
+    String nameShareTrx_xpath = "//*[@id='user']/div/div[1]";
+    String messageShareTrx_xpath = "//*[@id='message']";
+    String amountShareTrx_xpath = "//*[@id='amount']";
+    String sendButtonTrx_xpath = "/html/body/div[3]/div/div/div[3]/button[2]";
+    String currentAmount_xpath = "//*[@id='carrot-left']";
 
     // Define Locators
     By sharedSpent_loc = By.xpath(sharedSpent_xpath + "[1]");
@@ -24,6 +28,9 @@ public class HistoryTransactionPage {
     By shareTrx_loc = By.xpath(shareTrx_xpath);
     By nameShareTrx_loc = By.xpath(nameShareTrx_xpath);
     By messageShareTrx_loc = By.xpath(messageShareTrx_xpath);
+    By amountShareTrx_loc = By.xpath(amountShareTrx_xpath);
+    By sendButtonTrx_loc = By.xpath(sendButtonTrx_xpath);
+    By currentAmountTrx_loc = By.xpath(currentAmount_xpath);
 
     public HistoryTransactionPage(WebDriver driver) {
         this.driver = driver;
@@ -40,10 +47,10 @@ public class HistoryTransactionPage {
         Assert.assertEquals(this.driver.findElement(Header.pageTitle_loc).getText(), expectedPageTittle);
     }
 
-    public void assertSpentCarrotBasket() {
-        String expectedBazaar = "0 Carrot";
-        String expectedDonation = "0 Carrot";
-        String expectedShare = "-3 Carrots";
+    public void assertSpentCarrotBasket(String bazaar, String donation, String share) {
+        String expectedBazaar = bazaar + " Carrot";
+        String expectedDonation = donation + " Carrot";
+        String expectedShare = share + " Carrots";
 
         // Assert Bazaar Spent Carrot is as expected
         Assert.assertEquals(this.driver.findElement(bazaarSpent_loc).getText(), expectedBazaar);
@@ -55,21 +62,33 @@ public class HistoryTransactionPage {
         driver.findElement(shareTrx_loc).click();
     }
 
-    public void sendCarrot(String name, String message) {
+    public void accept() {
+        driver.switchTo().alert().accept();
+    }
+
+    public void assertAlertText(String expectedAlert) {
+        Assert.assertEquals(driver.switchTo().alert().getText(), expectedAlert);
+    }
+
+    public void sendCarrot(String name, String message, String amount) {
         // Get Username and password input field
         WebElement name_elm = this.driver.findElement(this.nameShareTrx_loc);
         WebElement message_elm = this.driver.findElement(this.messageShareTrx_loc);
+        WebElement amount_elm = this.driver.findElement(this.amountShareTrx_loc);
 
         // Type the username and password into the field
         name_elm.sendKeys(name);
         message_elm.sendKeys(message);
+        amount_elm.sendKeys(amount);
 
-        // , String message, int amount
-        // // Find the login button
-        // WebElement loginButton = this.driver.findElement(this.loginButton_loc);
+        // Find the send button
+        WebElement sendButton = this.driver.findElement(this.sendButtonTrx_loc);
 
-        // // Click the login button
-        // loginButton.click();
+        // Click the login button
+        sendButton.click();
+    }
 
+    public void assertCurrentCarrotsAmount(String currentAmount) {
+        Assert.assertEquals(this.driver.findElement(currentAmountTrx_loc).getText(), currentAmount);
     }
 }
