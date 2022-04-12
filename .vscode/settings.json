@@ -2,6 +2,9 @@
   "java.project.referencedLibraries": [
     "lib/**/*.jar",
     "c:\\Users\\Eva_R616\\Downloads\\hamcrest-2.2.jar",
-    "c:\\Users\\Eva_R616\\Downloads\\junit-4.13.2.jar"
+    "c:\\Users\\Eva_R616\\Downloads\\junit-4.13.2.jar",
+    "c:\\Users\\Faris_A616\\Downloads\\hamcrest-2.2.jar",
+    "c:\\Users\\Faris_A616\\Downloads\\junit-4.13.2.jar",
+    "c:\\Users\\Faris_A616\\Downloads\\selenium-server-4.1.3.jar"
   ]
 }
