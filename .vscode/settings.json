@@ -2,6 +2,8 @@
   "java.project.referencedLibraries": [
     "lib/**/*.jar",
     "c:\\Users\\Eva_R616\\Downloads\\hamcrest-2.2.jar",
-    "c:\\Users\\Eva_R616\\Downloads\\junit-4.13.2.jar"
+    "c:\\Users\\Eva_R616\\Downloads\\junit-4.13.2.jar",
+    "c:\\Users\\Arifka_R789\\Downloads\\hamcrest-2.2.jar",
+    "c:\\Users\\Arifka_R789\\Downloads\\junit-4.13.2.jar",
   ]
 }
